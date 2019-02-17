@@ -11,7 +11,18 @@ const reducers = combineReducers({
   todo: todoReducer
 });
 
-export default createStore(
+// logger for debug usage
+// export const logger = store => next => action => {
+//   // console.log('dispatching', action)
+//   let result = next(action);
+//   console.log('next state', store.getState())
+//   return result;
+// }
+
+const store = createStore(
   reducers,
+  // composeWithDevTools(applyMiddleware(logger, thunk))
   composeWithDevTools(applyMiddleware(thunk))
 );
+
+export default store;

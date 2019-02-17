@@ -1,11 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TodoListItem from './TodoListItem';
 import { readTodos, updateTodo, deleteTodo } from '../actions';
+import { getVisibleTodos } from '../selectors';
+import TodoListItem from './TodoListItem';
 
 class TodoList extends React.Component {
   componentDidMount() {
     this.props.readTodos();
+    // setTimeout(() => {
+    //   console.log('getState: ', this.props.todos);
+    // }, 100);
+    
   }
   handleSubmit = () => {
     return this.props.todos.map((todo, index) =>
@@ -24,9 +29,10 @@ class TodoList extends React.Component {
   }
 }
 
-const mapStateToProops = (state) => {
+const mapStateToProops = (state, ownProps) => {
+  console.log(ownProps);
   return {
-    todos: state.todo.todos
+    todos: getVisibleTodos(state.todo.todos, ownProps.filter) 
   }
 }
 
